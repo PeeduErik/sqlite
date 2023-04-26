@@ -16,7 +16,7 @@ def lisa():
 def kuvaread():
     yhendus = sqlite3.connect ("ppajo.db")
     a = yhendus.cursor()
-    a.execute("SELECT * FROM tabel")
+    a.execute("SELECT * FROM tabel WHERE car_year<2000 LIMIT 20")
     siuu = a.fetchall()
     for rida in siuu:
         print(rida)
@@ -38,15 +38,15 @@ def kesk():
     max_hind = a.fetchone()[0]
     print("Kõige kallim hind:", max_hind)
     yhendus.close()
-def vanemad_autod():
+def kallid_autod():
     yhendus = sqlite3.connect ("ppajo.db")
     a = yhendus.cursor()
-    sql = "SELECT * FROM tabel WHERE car_year < 2000 ORDER BY car_year ASC"
-    a.execute(sql)
-    results = a.fetchall()
-    for row in results:
-        print(row)
+    a.execute("SELECT * FROM tabel WHERE car_price>70000 LIMIT 5")
+    mjau = a.fetchall()
+    for rida in mjau:
+        print(rida)
     yhendus.close()
+    
 def uusauto():
     yhendus = sqlite3.connect ("ppajo.db")
     a = yhendus.cursor()
@@ -62,7 +62,7 @@ def uusauto():
     
 def menu():
          while True:
-                    print("Tee valik\n1. Asjade lisamin\n2. Kuva vanemad autod\n3. Kustutamine\n4. Keskmine ja kallis\n5. Vanad autod ees\n6. 5 kõige uuemat autot\n0. exit")
+                    print("Tee valik\n1. Asjade lisamin\n2. Kuva vanemad autod\n3. Kustutamine\n4. Keskmine ja kallis\n5. Kallid autod \n6. 5 kõige uuemat autot\n0. exit")
                     algus = int(input("Sisesta nr: "))
                     if algus == 1:
                         lisa()
@@ -73,7 +73,7 @@ def menu():
                     elif algus == 4:
                         kesk()
                     elif algus == 5:
-                        vanemad_autod()
+                        kallid_autod()
                     elif algus == 6:
                         uusauto()
                         
